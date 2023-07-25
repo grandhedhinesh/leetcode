@@ -1,0 +1,20 @@
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        l = len(strs)
+        dp = [[[0] * (n + 1) for i in range(m + 1)] for j in range(l)]
+        t = [(s.count('0'), s.count('1')) for s in strs]
+        n0, n1 = t[0]
+        for j in range(m + 1):
+            for k in range(n + 1):
+                if n0 <= j and n1 <= k:
+                    dp[0][j][k] = 1
+
+        for i in range(1, l):
+            n0, n1 = t[i]
+            for j in range(m + 1):
+                for k in range(n + 1):
+                    dp[i][j][k] = dp[i - 1][j][k]
+                    if n0 <= j and n1 <= k:
+                        dp[i][j][k] = max(dp[i][j][k], dp[i - 1][j - n0][k - n1] + 1)
+
+        return dp[-1][-1][-1]
