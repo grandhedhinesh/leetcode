@@ -9,3 +9,4 @@ class Solution:
             s += [cur] * s[i]
             i += 1
         return s[:n].count(1)
+
